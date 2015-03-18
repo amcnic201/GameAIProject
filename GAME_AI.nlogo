@@ -1,5 +1,6 @@
 turtles-own [energy]
 
+:check if GitHub repository is working 
 
 to setup 
   clear-all 
@@ -32,7 +33,6 @@ end
 
 to move-turtles 
   ask turtles [
-    
     forward 2
     bounce
     fd 0.1
@@ -44,7 +44,6 @@ to bounce
   if abs [pxcor] of patch-ahead 0.1 = max-pxcor
   [ set heading (- heading) ]
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
