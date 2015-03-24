@@ -1,19 +1,10 @@
 turtles-own [energy]
 
-:check if GitHub repository is working 
-
 to setup 
   clear-all 
   setup-patches
   setup-turtles
-  draw-walls
   reset-ticks
-end
-
-to draw-walls
-  ask patches with [abs pxcor = max-pxcor]
-  [set pcolor blue]
-  
 end
 
 to setup-patches
@@ -21,9 +12,8 @@ to setup-patches
 end
 
 to setup-turtles
-  create-turtles number [ setxy random-xcor -17 ] 
+  create-turtles 5 [ setxy random-xcor -17 ] 
 end
-   
 
 to go
   if ticks >= 500 [ stop ]  
@@ -32,7 +22,8 @@ to go
 end
 
 to move-turtles 
-  ask turtles [
+  ask turtles [ 
+    set heading 180
     forward 2
     bounce
     fd 0.1
@@ -40,6 +31,16 @@ to move-turtles
   
 end
 
+to destroy-turtles
+  if ticks > 5 
+  [die]
+end
+
+;;to destroy-turtles
+ ;; if abs [pycor] of patch-ahead 0.1 = max-pycor
+  ;;[ die ]
+;;end
+     
 to bounce 
   if abs [pxcor] of patch-ahead 0.1 = max-pxcor
   [ set heading (- heading) ]
@@ -105,21 +106,6 @@ NIL
 NIL
 NIL
 0
-
-SLIDER
-24
-253
-196
-286
-Number
-Number
-10
-400
-10
-1
-1
-NIL
-HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
