@@ -1,11 +1,20 @@
-breed [ship a-ship]
+breed [ships ship]
 breed [rocks rock]
 
+
 to setup 
+  ask patches [ set pcolor black ]
   clear-all 
-  setup-patches
   setup-turtles
   reset-ticks
+  
+  set-default-shape ships "square"
+  create-ships 5
+  [
+   set color red
+    set size 1.5
+    setxy random-xcor -17
+  ]
   
   set-default-shape rocks "circle" 
   create-rocks 5
@@ -16,10 +25,6 @@ to setup
   ]
 end
 
-to setup-patches
-  ask patches [ set pcolor black ]
-end
-
 to setup-turtles
   create-turtles 5 [ setxy random-xcor -17 ] 
 end
@@ -27,23 +32,37 @@ end
 to go
   if ticks >= 500 [ stop ]  
   move-turtles
+  ;;move-rocks
+  ;;move-ships
   tick
+  ;;move-rocks
+  ;;move-turtles
 end
 
-to move-turtles 
+to move-turtles
   ask turtles [ 
     set heading 180
     forward 2
     bounce
     fd 0.1
+    
   ] 
+  
+    
   
 end
 
-to destroy-turtles
-  if ticks > 5 
-  [die]
-end
+;;to move-rocks
+;;rt random-float 360
+    ;;set xc xc + (step-size * dx)
+    ;;set yc yc + (step-size * dy)
+;;end
+  
+
+;;to destroy-turtles
+;;  if ticks > 5 
+;;  [die]
+;;end
 
 ;;to destroy-turtles
  ;; if abs [pycor] of patch-ahead 0.1 = max-pycor
