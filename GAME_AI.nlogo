@@ -1,10 +1,19 @@
-turtles-own [energy]
+breed [ship a-ship]
+breed [rocks rock]
 
 to setup 
   clear-all 
   setup-patches
   setup-turtles
   reset-ticks
+  
+  set-default-shape rocks "circle" 
+  create-rocks 5
+  [
+    set color white
+    set size 3
+    setxy random-xcor random-ycor
+  ]
 end
 
 to setup-patches
