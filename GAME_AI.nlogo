@@ -5,7 +5,7 @@ breed [rocks rock]
 to setup 
   ask patches [ set pcolor black ]
   clear-all 
-  setup-turtles
+  ;;setup-turtles
   reset-ticks
   
   set-default-shape ships "square"
@@ -25,9 +25,9 @@ to setup
   ]
 end
 
-to setup-turtles
-  create-turtles 5 [ setxy random-xcor -17 ] 
-end
+;;to setup-turtles
+  ;;create-turtles 5 [ setxy random-xcor -17 ] 
+;;end
 
 to go
   if ticks >= 500 [ stop ]  
