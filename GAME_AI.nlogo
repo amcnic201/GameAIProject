@@ -31,16 +31,15 @@ end
 
 to go
   if ticks >= 500 [ stop ]  
-  move-turtles
-  ;;move-rocks
-  ;;move-ships
+  move-ships
+  move-rocks
   tick
   ;;move-rocks
   ;;move-turtles
 end
 
-to move-turtles
-  ask turtles [ 
+to move-ships
+  ask ships [ 
     set heading 180
     forward 2
     bounce
@@ -52,11 +51,15 @@ to move-turtles
   
 end
 
-;;to move-rocks
-;;rt random-float 360
+to move-rocks
+  ask rocks 
+  [
+    rt random-float 360
+    forward 5
+  ]
     ;;set xc xc + (step-size * dx)
     ;;set yc yc + (step-size * dy)
-;;end
+end
   
 
 ;;to destroy-turtles
