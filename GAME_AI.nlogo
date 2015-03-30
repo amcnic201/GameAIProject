@@ -27,7 +27,7 @@ to setup
   create-rock 2                    ;; create 5 rocks at the start of the game 
   [
     set color white                 ;; the coloyur of the rocks to white                     
-    set size 1                      ;; set the size of the rocks to 3 
+    set size 3.5                      ;; set the size of the rocks to 3 
     setxy random-xcor random-ycor   ;; the spawn point of the rocks will be a random location of the screen 
   ]
   
@@ -62,7 +62,7 @@ to go
   ]
       
       ask rock
-  [ ask patches in-cone 1 360 
+  [ ask patches in-cone 3.5 360 
       [ set pcolor white ]
   ]   
        
