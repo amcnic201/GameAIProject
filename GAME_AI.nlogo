@@ -41,9 +41,13 @@ end
 to go
   ;;if ticks >= 500 [stop]
   c-move-turtles
+ 
   c-color-refresh
+  
   a-move-ships                      ;; the method name for moving the ships
+  
   a-move-rocks                      ;; the method for moving the rocks
+ 
   ask turtles[c-reflect]
   
  ;; ask pentagon
@@ -68,8 +72,11 @@ to go
   ]   
        
    
+ 
  ask pentagon[ if abs [pcolor] of patch-ahead 3 = yellow [ set heading (- heading) ]]
+ 
  ask patches with [abs pycor = max-pycor] [ set pcolor green]
+ 
   tick
 end
 
