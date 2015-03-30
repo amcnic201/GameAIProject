@@ -80,7 +80,7 @@ to c-setup-turtles
     set color white
     set size 1.5  ;; easier to see
     set label-color blue - 2
-    set heading 90 setxy 5  -14
+    set heading 90 setxy 5  -36
   ]
 ;;  ask turtles [set heading 90 setxy 5  -15]
   
@@ -205,10 +205,10 @@ end
 GRAPHICS-WINDOW
 210
 10
-675
-470
-17
-16
+1221
+1042
+38
+38
 13.0
 1
 10
@@ -219,10 +219,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--17
-17
--16
-16
+-38
+38
+-38
+38
 1
 1
 1
