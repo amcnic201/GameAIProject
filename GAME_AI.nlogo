@@ -145,7 +145,7 @@ to c-bullet-launch
     set color green
     set size 1.5  ;; easier to see
     set label-color blue - 2
-    setxy 0 -5
+setxy 0 -5
     set heading 0
     
   ]
@@ -166,11 +166,9 @@ end
 
 to a-move-rocks
   ask rocks 
-  [;;rt random-float 360
-    if abs [pcolor] of patch-ahead 1 = yellow [die]
-    forward 0.2         
-                 
-    ;; move the rocks 0.4
+  [
+    ;;rt random-float 360
+    forward 0.2                     ;; move the rocks 0.4
   ]
     ;;set xc xc + (step-size * dx)
     ;;set yc yc + (step-size * dy)
