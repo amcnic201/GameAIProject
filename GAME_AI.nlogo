@@ -1,34 +1,26 @@
-breed [ships ship]
+breed [ships ship]                  ;;The two breeds of turtles
 breed [rocks rock]
 
-
-turtles-own [
-  speed
-]
-
-
 to setup 
-  ask patches [ set pcolor black ]
+  ask patches [ set pcolor black ]  ;; set background to black
   clear-all 
   ;;setup-turtles
   reset-ticks
   
-  set-default-shape ships "square"
-  create-ships 5
+  set-default-shape ships "square"  ;;set the shape of the ships to a square  
+  create-ships 5                    ;; create 5 ship at the start 
   [
-   set color red
-   
-    set size 1.5
-    setxy random-xcor -17
+   set color red                    ;; set the colour pof the ships to red
+   set size 1.5                     ;; set the size of the ships
+   setxy random-xcor -17            ;; set the location of the ship spawn point, at the top of the screen
   ]
   
-  set-default-shape rocks "circle" 
-  create-rocks 5
+  set-default-shape rocks "circle"  ;; set the shape of the rocks to a circle
+  create-rocks 5                    ;; create 5 rocks at the start of the game 
   [
-    set color white
-    set speed 2
-    set size 3
-    setxy random-xcor random-ycor
+    set color white                 ;; the coloyur of the rocks to white                     
+    set size 3                      ;; set the size of the rocks to 3 
+    setxy random-xcor random-ycor   ;; the spawn point of the rocks will be a random location of the screen 
   ]
 end
 
@@ -37,27 +29,26 @@ end
 ;;end
 
 to go  
-  move-ships
-  move-rocks
+  a-move-ships                      ;; the method name for moving the ships
+  a-move-rocks                      ;; the method for moving the rocks
+  ;;a-destroy-ships                      
+  ;;a-spawn-ships
+  ;;a-spawn-rocks
   tick
   ;;move-rocks
-  ;;move-turtles
 end
 
-to move-ships
+to a-move-ships
   ask ships [ 
-    set heading 180
-    forward 0.7
+    set heading 180                 ;; set the movement of the ships to 180 degress, meaning they will move straight down
+    forward 0.7                     ;; 
     bounce
     fd 0.1
     
   ] 
-  
-    
-  
 end
 
-to move-rocks
+to a-move-rocks
   ask rocks 
   [
     ;;rt random-float 360
@@ -67,6 +58,19 @@ to move-rocks
     ;;set xc xc + (step-size * dx)
     ;;set yc yc + (step-size * dy)
 end
+
+;;to a-destroy-ships
+ ;; if abs[pxcor] of patch-ahead 0.1 = max-pxcor
+  ;;[die]
+;;end
+
+;;to a-spawn-ships
+  ;;count turtles
+ ;;if turtle-count < 2
+   ;; [ 
+    ;;  create-ship 1
+  ;;]
+;;end 
   
 
 ;;to destroy-turtles
@@ -144,6 +148,17 @@ NIL
 NIL
 NIL
 0
+
+MONITOR
+46
+151
+129
+196
+NIL
+count turtles
+3
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
