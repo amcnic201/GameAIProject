@@ -4,10 +4,9 @@ breed [ bullet bullets ]
 pentagon-own [ energy ]
 breed [ shells shell ]
 breed [ ships ship ]
-breed [ rocks rock ]
+breed [ rock rocks ]
 
 
-globals [ x-vel y-vel velocity previous-wall-height previous-wall-pos]
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;Player FSM;;;;;;;;;;;;;
@@ -24,8 +23,8 @@ to setup
    setxy random-xcor -12            ;; set the location of the ship spawn point, at the top of the screen
   ]
   
-  set-default-shape rocks "circle"  ;; set the shape of the rocks to a circle
-  create-rocks 2                    ;; create 5 rocks at the start of the game 
+  set-default-shape rock "circle"  ;; set the shape of the rocks to a circle
+  create-rock 2                    ;; create 5 rocks at the start of the game 
   [
     set color white                 ;; the coloyur of the rocks to white                     
     set size 3                      ;; set the size of the rocks to 3 
@@ -41,13 +40,9 @@ end
 to go
   ;;if ticks >= 500 [stop]
   c-move-turtles
- 
   c-color-refresh
-  
   a-move-ships                      ;; the method name for moving the ships
-  
   a-move-rocks                      ;; the method for moving the rocks
- 
   ask turtles[c-reflect]
   
  ;; ask pentagon
@@ -66,28 +61,37 @@ to go
       
   ]
       
-      ask rocks
+      ask rock
   [ ask patches in-cone 2 360 
       [ set pcolor white ]
   ]   
        
    
- 
  ask pentagon[ if abs [pcolor] of patch-ahead 3 = yellow [ set heading (- heading) ]]
- 
  ask patches with [abs pycor = max-pycor] [ set pcolor green]
  
+ 
+ ask bullet[ if abs [pcolor] of patch-ahead 0.1 = white [collision-script]]
+ 
+ 
   tick
+end
+to collision-script
+  ;;let prey one-of rocks-here                    ;; grab a random rock
+  ;;if prey != nobody  
+  if any? rock-here                           ;; did we get one?  if so,
+    [ ask rock [ die ]                          ;; kill it
+       ] ;; get energy from eating
 end
 
 to c-setup-turtles
   set-default-shape pentagon "pentagon"
  create-pentagon 1
   [
-    set color pink
+    set color white
     set size 1.5  ;; easier to see
     set label-color blue - 2
-    set heading 90 setxy 5  -36
+    set heading 90 setxy 5  -14
   ]
 ;;  ask turtles [set heading 90 setxy 5  -15]
   
@@ -145,9 +149,9 @@ end
 ;;end
 
 to c-bullet-launch
-     set-default-shape bullet "plant"
+     set-default-shape bullet "square"
 ;;    set posi[ show [list xcor ycor] of turtle 1]]
-  create-bullet 1  ;; create the sheep, then initialize their variables
+  create-bullet 1  
   [
     set color green
     set size 1.5  ;; easier to see
@@ -159,8 +163,8 @@ setxy 0 -5
 end
 
 to c-sprog-spawns
-ask pentagon [hatch-bullet 1 [ set color yellow lt 90 fd 1 ]]
-      
+ask pentagon [hatch-bullet 1 [set color pink
+    lt 90 fd 1 ]]
 end
 
 to a-move-ships
@@ -172,7 +176,7 @@ to a-move-ships
 end
 
 to a-move-rocks
-  ask rocks 
+  ask rock 
   [
     ;;rt random-float 360
     forward 0.2                     ;; move the rocks 0.4
