@@ -2,6 +2,11 @@ breed [ships ship]
 breed [rocks rock]
 
 
+turtles-own [
+  speed
+]
+
+
 to setup 
   ask patches [ set pcolor black ]
   clear-all 
@@ -12,6 +17,7 @@ to setup
   create-ships 5
   [
    set color red
+   
     set size 1.5
     setxy random-xcor -17
   ]
@@ -20,6 +26,7 @@ to setup
   create-rocks 5
   [
     set color white
+    set speed 2
     set size 3
     setxy random-xcor random-ycor
   ]
@@ -29,8 +36,7 @@ end
   ;;create-turtles 5 [ setxy random-xcor -17 ] 
 ;;end
 
-to go
-  if ticks >= 500 [ stop ]  
+to go  
   move-ships
   move-rocks
   tick
@@ -41,7 +47,7 @@ end
 to move-ships
   ask ships [ 
     set heading 180
-    forward 2
+    forward 0.7
     bounce
     fd 0.1
     
@@ -54,8 +60,9 @@ end
 to move-rocks
   ask rocks 
   [
-    rt random-float 360
-    forward 5
+    ;;rt random-float 360
+    forward 0.4
+    fd 0.1
   ]
     ;;set xc xc + (step-size * dx)
     ;;set yc yc + (step-size * dy)
