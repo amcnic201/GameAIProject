@@ -39,7 +39,7 @@ to setup
 end
 
 to go
-  if ticks >= 500 [stop]
+  ;;if ticks >= 500 [stop]
   c-move-turtles
   c-color-refresh
   a-move-ships                      ;; the method name for moving the ships
@@ -77,7 +77,7 @@ to c-setup-turtles
   set-default-shape pentagon "pentagon"
  create-pentagon 1
   [
-    set color white
+    set color pink
     set size 1.5  ;; easier to see
     set label-color blue - 2
     set heading 90 setxy 5  -36
@@ -152,7 +152,8 @@ setxy 0 -5
 end
 
 to c-sprog-spawns
-ask pentagon [hatch-bullet 1 [ lt 90 fd 1 ]]
+ask pentagon [hatch-bullet 1 [ set color yellow lt 90 fd 1 ]]
+      
 end
 
 to a-move-ships
@@ -313,7 +314,7 @@ BUTTON
 434
 156
 467
-SPROG!
+Fire
 c-sprog-spawns
 NIL
 1
