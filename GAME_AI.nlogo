@@ -27,7 +27,7 @@ to setup
   create-rock 2                    ;; create 5 rocks at the start of the game 
   [
     set color white                 ;; the coloyur of the rocks to white                     
-    set size 3                      ;; set the size of the rocks to 3 
+    set size 1                      ;; set the size of the rocks to 3 
     setxy random-xcor random-ycor   ;; the spawn point of the rocks will be a random location of the screen 
   ]
   
@@ -62,7 +62,7 @@ to go
   ]
       
       ask rock
-  [ ask patches in-cone 2 360 
+  [ ask patches in-cone 1 360 
       [ set pcolor white ]
   ]   
        
@@ -91,7 +91,7 @@ to c-setup-turtles
     set color white
     set size 1.5  ;; easier to see
     set label-color blue - 2
-    set heading 90 setxy 5  -14
+    set heading 90 setxy 5  -35
   ]
 ;;  ask turtles [set heading 90 setxy 5  -15]
   
