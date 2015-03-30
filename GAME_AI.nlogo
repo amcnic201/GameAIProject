@@ -1,59 +1,173 @@
-breed [ships ship]                  ;;The two breeds of turtles
-breed [rocks rock]
+breed [ sheep a-sheep ] 
+breed [ pentagon pentagons ]
+breed [ bullet bullets ]
+pentagon-own [ energy ]
+breed [ shells shell ]
+breed [ ships ship ]
+breed [ rocks rock ]
 
-to setup 
-  ask patches [ set pcolor black ]  ;; set background to black
-  clear-all 
-  ;;setup-turtles
-  reset-ticks
-  
-  set-default-shape ships "square"  ;;set the shape of the ships to a square  
-  create-ships 5                    ;; create 5 ship at the start 
+
+globals [ x-vel y-vel velocity previous-wall-height previous-wall-pos]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;Player FSM;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to setup
+  clear-all
+
+  set-default-shape ships "default"  ;;set the shape of the ships to a square  
+  create-ships 2                    ;; create 5 ship at the start 
   [
    set color red                    ;; set the colour pof the ships to red
-   set size 1.5                     ;; set the size of the ships
-   setxy random-xcor -17            ;; set the location of the ship spawn point, at the top of the screen
+   set size 2                    ;; set the size of the ships
+   setxy random-xcor -12            ;; set the location of the ship spawn point, at the top of the screen
   ]
   
   set-default-shape rocks "circle"  ;; set the shape of the rocks to a circle
-  create-rocks 5                    ;; create 5 rocks at the start of the game 
+  create-rocks 2                    ;; create 5 rocks at the start of the game 
   [
     set color white                 ;; the coloyur of the rocks to white                     
     set size 3                      ;; set the size of the rocks to 3 
     setxy random-xcor random-ycor   ;; the spawn point of the rocks will be a random location of the screen 
   ]
+  
+  c-setup-turtles 
+  reset-ticks
+  c-draw-boundaries
+  
 end
 
-;;to setup-turtles
-  ;;create-turtles 5 [ setxy random-xcor -17 ] 
-;;end
-
-to go  
+to go
+  if ticks >= 500 [stop]
+  c-move-turtles
+  c-color-refresh
   a-move-ships                      ;; the method name for moving the ships
   a-move-rocks                      ;; the method for moving the rocks
-  ;;a-destroy-ships                      
-  ;;a-spawn-ships
-  ;;a-spawn-rocks
+  ask turtles[c-reflect]
+  
+ ;; ask pentagon
+  ;;[ ask patches in-cone 3 240 
+    ;;  [ set pcolor red ] 
+      
+  ;;] 
+     ask sheep
+  [ ask patches in-cone 2 360 
+      [ set pcolor yellow ]
+  ]
+      
+      ask ships
+  [ ask patches in-cone 2 360 
+      [ set pcolor blue ]
+      
+  ]
+      
+      ask rocks
+  [ ask patches in-cone 2 360 
+      [ set pcolor white ]
+  ]   
+       
+   
+ ask pentagon[ if abs [pcolor] of patch-ahead 3 = yellow [ set heading (- heading) ]]
+ ask patches with [abs pycor = max-pycor] [ set pcolor green]
   tick
-  ;;move-rocks
+end
+
+to c-setup-turtles
+  set-default-shape pentagon "pentagon"
+ create-pentagon 1
+  [
+    set color white
+    set size 1.5  ;; easier to see
+    set label-color blue - 2
+    set heading 90 setxy 5  -14
+  ]
+;;  ask turtles [set heading 90 setxy 5  -15]
+  
+;; each turtle makes a red "splotch" of patches in a 60 degree
+;; cone of radius -defined by user- ahead of itself
+end
+
+to c-draw-boundaries
+  
+   ask patches with [abs pxcor = max-pxcor]
+   [ set pcolor blue ]
+   ask patches with [abs pycor = min-pycor] [ set pcolor green]
+end
+to c-reflect
+  
+  ; check: hitting left or right wall?
+  if abs [pxcor] of patch-ahead 0.1 = max-pxcor
+    ; if so, reflect heading around x axis
+    [ set heading (- heading) ]
+  ; check: hitting top or bottom wall?
+  if abs [pycor] of patch-ahead 0.1 = max-pycor
+    ; if so, reflect heading around y axis
+    [ set heading (180 - heading) ]
+end
+  
+to c-move-turtles
+  ask turtles[
+     forward 1]
+  end
+
+to c-color-refresh
+ ask patches[set pcolor  black]
+ ask patches with [abs pxcor = max-pxcor]
+   [ set pcolor blue ]
+end
+
+
+to c-fire-bullet
+;;  set-default-shape turtles bullet "plant"
+  ;;create-bullet 1
+   set-default-shape sheep "sheep"
+  create-sheep 4  ;; create the sheep, then initialize their variables
+  [
+    set color white
+    set size 1.5  ;; easier to see
+    set label-color blue - 2
+    setxy random-xcor random-ycor
+  ]
+end
+
+;;to change-direction
+;;if abs [pxcool] of patch-ahead 0.1 = max-pxcor
+    ; if so, reflect heading around x axis
+  ;;ask pentagon[ set heading (- heading) ]
+;;end
+
+to c-bullet-launch
+     set-default-shape bullet "plant"
+;;    set posi[ show [list xcor ycor] of turtle 1]]
+  create-bullet 1  ;; create the sheep, then initialize their variables
+  [
+    set color green
+    set size 1.5  ;; easier to see
+    set label-color blue - 2
+setxy 0 -5
+    set heading 0
+    
+  ]
+end
+
+to c-sprog-spawns
+ask pentagon [hatch-bullet 1 [ lt 90 fd 1 ]]
 end
 
 to a-move-ships
-  ask ships [ 
-    set heading 180                 ;; set the movement of the ships to 180 degress, meaning they will move straight down
-    forward 0.7                     ;; 
-    bounce
-    fd 0.1
-    
-  ] 
+  ask ships[ if abs [pcolor] of patch-ahead 0.1 = green [ set heading (- heading) ]  
+    ;;set heading 180                 ;; set the movement of the ships to 180 degress, meaning they will move straight down
+    fd 0.7                          ;; move the ships forward                             
+   
+] 
 end
 
 to a-move-rocks
   ask rocks 
   [
     ;;rt random-float 360
-    forward 0.4
-    fd 0.1
+    forward 0.2                     ;; move the rocks 0.4
   ]
     ;;set xc xc + (step-size * dx)
     ;;set yc yc + (step-size * dy)
@@ -83,7 +197,7 @@ end
   ;;[ die ]
 ;;end
      
-to bounce 
+to a-bounce 
   if abs [pxcor] of patch-ahead 0.1 = max-pxcor
   [ set heading (- heading) ]
 end
@@ -159,6 +273,57 @@ count turtles
 3
 1
 11
+
+BUTTON
+77
+239
+171
+272
+fire a bullet
+c-fire-bullet
+NIL
+1
+T
+OBSERVER
+NIL
+A
+NIL
+NIL
+1
+
+BUTTON
+77
+332
+189
+365
+c-bullet-launch
+c-bullet-launch
+NIL
+1
+T
+OBSERVER
+NIL
+K
+NIL
+NIL
+1
+
+BUTTON
+81
+434
+156
+467
+SPROG!
+c-sprog-spawns
+NIL
+1
+T
+OBSERVER
+NIL
+0
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
